@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <include file="db/changelog/ddl/18-01-2025_create_category_type_subcategory.xml"/>
+
+    <!-- Insert Data Into Tables type/category/subcategory -->
+    <include file="db/changelog/dml/18-01-2025_insert_category_type_subcategory.sql"/>
+
+
+</databaseChangeLog>

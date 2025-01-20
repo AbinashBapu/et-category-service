@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: category
+  config:
+    import: optional:configserver:http://localhost:8888
+  profiles:
+    active: dev
+  cloud:
+    config:
+      profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+  liquibase:
+    default-schema: et_category
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: et_category
+server:
+  port: 8081
+
+

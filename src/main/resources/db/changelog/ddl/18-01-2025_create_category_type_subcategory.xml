@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1737190503683-create-type-table" author="abinash" >
+        <createTable tableName="type" >
+            <column name="pk_type_id" type="UUID">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="type_name" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="type_description" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1737190503683-create-category-table" author="abinash">
+        <createTable tableName="category">
+            <column name="pk_category_id" type="UUID">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="fk_type_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="true"/>
+            </column>
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Add foreign key constraint -->
+        <addForeignKeyConstraint
+                baseTableName="category"
+                baseColumnNames="fk_type_id"
+                referencedTableName="type"
+                referencedColumnNames="pk_type_id"
+                constraintName="fk_category_to_type"/>
+
+    </changeSet>
+
+    <changeSet id="1737190503683-create-sub-category-table" author="abinash">
+        <createTable tableName="sub_category">
+            <column name="pk_sub_category_id" type="UUID">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="fk_category_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="sub_category"
+                baseColumnNames="fk_category_id"
+                referencedTableName="category"
+                referencedColumnNames="pk_category_id"
+                constraintName="fk_sub_category_to_category"/>
+    </changeSet>
+
+</databaseChangeLog>
