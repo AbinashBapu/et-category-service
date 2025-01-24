@@ -22,7 +22,12 @@ spring:
       hibernate:
         format_sql: true
         default_schema: et_category
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
 server:
-  port: 8081
+  port: 9001
 
 
