@@ -42,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
             return List.of();
         }
 
-        return categoryEntityList.stream().map(categoryEntity -> {
+        return categoryEntityList.stream().filter(categoryEntity->categoryEntity.isActive() && !categoryEntity.isDeleted()).map(categoryEntity -> {
             CategoryInfo categoryInfo = new CategoryInfo();
             categoryInfo.setCategoryId(categoryEntity.getPkCategoryId());
             categoryInfo.setLabel(categoryEntity.getLabel());

@@ -22,8 +22,9 @@ public class CategoryController {
 
 
     @GetMapping
-    public List<CategoryInfo> getAllCategories() {
-        return categoryService.getAllCategories();
+    public Response<List<CategoryInfo>> getAllCategories() {
+        List<CategoryInfo> allCategories = categoryService.getAllCategories();
+        return new Response<>(200, "Category fetched successfully", allCategories, "Success");
     }
 
     @GetMapping("/{id}")
