@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("${api.version.v1}/types")
+@RequestMapping("${api.version.v1}/classification/type")
 public class TypeController {
 
     private final CategoryService categoryService;

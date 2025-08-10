@@ -25,6 +25,7 @@ public interface CategoryService {
      * Sub Category Service
      */
 
+    SubCategoryInfo getSubCategoryInfoByCategoryAndSubCategoryId(UUID categoryId, UUID subCategoryId);
     List<SubCategoryInfo> getAllSubCategories();
     SubCategoryInfo getSubCategoryInfoById(UUID id);
     void createSubCategory(TypeCategorySubCategoryRequest request);

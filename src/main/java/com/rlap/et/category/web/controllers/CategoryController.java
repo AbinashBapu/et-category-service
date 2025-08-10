@@ -3,6 +3,7 @@ package com.rlap.et.category.web.controllers;
 import com.rlap.et.category.service.CategoryService;
 import com.rlap.et.common.core.Response;
 import com.rlap.et.common.dto.CategoryInfo;
+import com.rlap.et.common.dto.SubCategoryInfo;
 import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("${api.version.v1}/categories")
+@RequestMapping("${api.version.v1}/classification/category")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -52,6 +53,12 @@ public class CategoryController {
     }
 
     // Type Endpoints
+
+    @GetMapping("/{categoryId}/subCategory/{subCategoryId}")
+    public Response<SubCategoryInfo> getSubCategoryInfoByCategoryAndSubCategoryId(@PathVariable UUID categoryId, @PathVariable UUID subCategoryId) {
+        SubCategoryInfo subCategoryInfo = categoryService.getSubCategoryInfoByCategoryAndSubCategoryId(categoryId, subCategoryId);
+        return new Response<>(200, "Sub category fetched successfully", subCategoryInfo, "Success");
+    }
 
 
 }

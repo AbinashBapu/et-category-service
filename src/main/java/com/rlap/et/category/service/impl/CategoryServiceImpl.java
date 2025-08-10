@@ -11,17 +11,23 @@ import com.rlap.et.common.dto.CategoryInfo;
 import com.rlap.et.common.dto.SubCategoryInfo;
 import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
 import com.rlap.et.common.dto.TypeInfo;
+import com.rlap.et.common.exception.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CategoryService.class);
     
     private final EtTypeRepository etTypeRepository;
     private final EtCategoryRepository etCategoryRepository;
@@ -41,33 +47,14 @@ public class CategoryServiceImpl implements CategoryService {
         if(categoryEntityList.isEmpty()){
             return List.of();
         }
-
-        return categoryEntityList.stream().filter(categoryEntity->categoryEntity.isActive() && !categoryEntity.isDeleted()).map(categoryEntity -> {
-            CategoryInfo categoryInfo = new CategoryInfo();
-            categoryInfo.setCategoryId(categoryEntity.getPkCategoryId());
-            categoryInfo.setLabel(categoryEntity.getLabel());
-            categoryInfo.setDescription(categoryEntity.getDescription());
-            categoryInfo.setActive(categoryEntity.isActive());
-            categoryInfo.setDeleted(categoryEntity.isDeleted());
-
-            EtTypeEntity categoryType = categoryEntity.getType();
-            TypeInfo typeInfo = new TypeInfo();
-            typeInfo.setTypeId(categoryType.getTypeId());
-            typeInfo.setTypeName(categoryType.getTypeName());
-            typeInfo.setTypeDescription(categoryType.getTypeDescription());
-            typeInfo.setActive(categoryType.isActive());
-            typeInfo.setDeleted(categoryType.isDeleted());
-
-            categoryInfo.setType(typeInfo);
-
-
-            return categoryInfo;
-        }).toList();
+        return categoryEntityList.stream().filter(categoryEntity->categoryEntity.isActive() && !categoryEntity.isDeleted()).map(this::getCategoryInfo).toList();
     }
 
     @Override
     public CategoryInfo getCategoryInfoById(UUID id) {
-        return null;
+        Optional<EtCategoryEntity> categoryEntity = etCategoryRepository.findCategoryByIdAndActiveIsTrueAndDeletedFalse(id);
+        return categoryEntity.map(this::getCategoryInfo).orElse(null);
+
     }
 
     @Override
@@ -83,6 +70,25 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(UUID id) {
 
+    }
+
+    @Override
+    public SubCategoryInfo getSubCategoryInfoByCategoryAndSubCategoryId(UUID categoryId, UUID subCategoryId) {
+
+        EtSubCategoryEntity subCategoryEntity = etSubCategoryRepository.findSubCategoryWithCategoryIfActiveAndNotDeleted(subCategoryId,categoryId);
+        if(subCategoryEntity == null){
+            logger.info("Category not found: CategoryId: {} :: subCategoryId: {}",categoryId,subCategoryId);
+            throw new ResourceNotFoundException("SubCategory not found!");
+        }
+
+        SubCategoryInfo subCategoryInfo = new SubCategoryInfo();
+        subCategoryInfo.setPkSubCategoryId(subCategoryEntity.getPkSubCategoryId());
+        subCategoryInfo.setLabel(subCategoryEntity.getLabel());
+        subCategoryInfo.setDescription(subCategoryEntity.getDescription());
+        subCategoryInfo.setActive(subCategoryEntity.isActive());
+        subCategoryInfo.setDeleted(subCategoryEntity.isDeleted());
+
+        return subCategoryInfo;
     }
 
     @Override
@@ -171,4 +177,41 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteType(UUID id) {
 
     }
+
+
+
+    private CategoryInfo getCategoryInfo(EtCategoryEntity categoryEntity) {
+        CategoryInfo categoryInfo = new CategoryInfo();
+        categoryInfo.setCategoryId(categoryEntity.getPkCategoryId());
+        categoryInfo.setLabel(categoryEntity.getLabel());
+        categoryInfo.setDescription(categoryEntity.getDescription());
+        categoryInfo.setActive(categoryEntity.isActive());
+        categoryInfo.setDeleted(categoryEntity.isDeleted());
+
+        EtTypeEntity categoryType = categoryEntity.getType();
+        TypeInfo typeInfo = new TypeInfo();
+        typeInfo.setTypeId(categoryType.getTypeId());
+        typeInfo.setTypeName(categoryType.getTypeName());
+        typeInfo.setTypeDescription(categoryType.getTypeDescription());
+        typeInfo.setActive(categoryType.isActive());
+        typeInfo.setDeleted(categoryType.isDeleted());
+
+        categoryInfo.setType(typeInfo);
+
+
+        List<SubCategoryInfo> subCategoryInfoList = categoryEntity.getSubCategories().stream().map(subCategoryEntity -> {
+            SubCategoryInfo subCategoryInfo = new SubCategoryInfo();
+            subCategoryInfo.setPkSubCategoryId(subCategoryEntity.getPkSubCategoryId());
+            subCategoryInfo.setLabel(subCategoryEntity.getLabel());
+            subCategoryInfo.setDescription(subCategoryEntity.getDescription());
+            subCategoryInfo.setActive(subCategoryEntity.isActive());
+            subCategoryInfo.setDeleted(subCategoryEntity.isDeleted());
+            return subCategoryInfo;
+        }).toList();
+
+        categoryInfo.setSubCategoryInfos(subCategoryInfoList);
+
+        return categoryInfo;
+    }
+
 }

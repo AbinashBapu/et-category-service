@@ -4,6 +4,7 @@ package com.rlap.et.category.entity;
 import com.rlap.et.common.core.EtBaseEntity;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +25,11 @@ public class EtCategoryEntity extends EtBaseEntity {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL)
+    private List<EtSubCategoryEntity> subCategories;
+
+
 
     public UUID getPkCategoryId() {
         return pkCategoryId;
@@ -57,7 +63,11 @@ public class EtCategoryEntity extends EtBaseEntity {
         this.description = description;
     }
 
+    public List<EtSubCategoryEntity> getSubCategories() {
+        return subCategories;
+    }
 
-
-
+    public void setSubCategories(List<EtSubCategoryEntity> subCategories) {
+        this.subCategories = subCategories;
+    }
 }

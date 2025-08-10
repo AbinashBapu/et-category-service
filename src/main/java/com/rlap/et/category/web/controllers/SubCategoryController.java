@@ -12,7 +12,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("${api.version.v1}/subcategories")
+@RequestMapping("${api.version.v1}/classification/subCategory")
 public class SubCategoryController {
 
 
