@@ -1,9 +1,6 @@
 package com.rlap.et.category.service;
 
-import com.rlap.et.common.dto.CategoryInfo;
-import com.rlap.et.common.dto.SubCategoryInfo;
-import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
-import com.rlap.et.common.dto.TypeInfo;
+import com.rlap.et.common.dto.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +13,8 @@ public interface CategoryService {
     * */
     List<CategoryInfo> getAllCategories();
     CategoryInfo getCategoryInfoById(UUID id);
-    void createCategory(TypeCategorySubCategoryRequest request);
-    void updateCategory(UUID id, TypeCategorySubCategoryRequest request);
+    void createCategory(CategoryRequest request, UUID loggedOnUserId);
+    void updateCategory(UUID id, CategoryRequest request, UUID loggedOnUserId);
     void deleteCategory(UUID id);
 
     /***
@@ -28,8 +25,8 @@ public interface CategoryService {
     SubCategoryInfo getSubCategoryInfoByCategoryAndSubCategoryId(UUID categoryId, UUID subCategoryId);
     List<SubCategoryInfo> getAllSubCategories();
     SubCategoryInfo getSubCategoryInfoById(UUID id);
-    void createSubCategory(TypeCategorySubCategoryRequest request);
-    void updateSubCategory(UUID id, TypeCategorySubCategoryRequest request);
+    void createSubCategory(LabelDesc request);
+    void updateSubCategory(UUID id, LabelDesc request);
     void deleteSubCategory(UUID id);
 
 
@@ -42,8 +39,8 @@ public interface CategoryService {
 
     List<TypeInfo> getAllTypes();
     CategoryInfo getTypeInfoById(UUID id);
-    void createType(TypeCategorySubCategoryRequest request);
-    void updateType(UUID id, TypeCategorySubCategoryRequest request);
+    void createType(LabelDesc request);
+    void updateType(UUID id, LabelDesc request);
     void deleteType(UUID id);
 
 

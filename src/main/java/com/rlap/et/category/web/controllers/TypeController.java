@@ -4,7 +4,8 @@ package com.rlap.et.category.web.controllers;
 import com.rlap.et.category.service.CategoryService;
 import com.rlap.et.common.core.Response;
 import com.rlap.et.common.dto.CategoryInfo;
-import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
+import com.rlap.et.common.dto.LabelDesc;
+import com.rlap.et.common.dto.LabelDesc;
 import com.rlap.et.common.dto.TypeInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,13 +40,13 @@ public class TypeController {
     }
 
     @PostMapping
-    public Response<Void> createType(@RequestBody TypeCategorySubCategoryRequest request) {
+    public Response<Void> createType(@RequestBody LabelDesc request) {
         categoryService.createType(request);
         return new Response<>(201, "Type created successfully", null, "Success");
     }
 
     @PutMapping("/{id}")
-    public Response<Void> updateType(@PathVariable UUID id, @RequestBody TypeCategorySubCategoryRequest request) {
+    public Response<Void> updateType(@PathVariable UUID id, @RequestBody LabelDesc request) {
         categoryService.updateType(id, request);
         return new Response<>(200, "Type updated successfully", null, "Success");
     }

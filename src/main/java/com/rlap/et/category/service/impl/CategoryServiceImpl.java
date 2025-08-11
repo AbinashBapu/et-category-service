@@ -7,16 +7,14 @@ import com.rlap.et.category.repository.EtCategoryRepository;
 import com.rlap.et.category.repository.EtSubCategoryRepository;
 import com.rlap.et.category.repository.EtTypeRepository;
 import com.rlap.et.category.service.CategoryService;
-import com.rlap.et.common.dto.CategoryInfo;
-import com.rlap.et.common.dto.SubCategoryInfo;
-import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
-import com.rlap.et.common.dto.TypeInfo;
+import com.rlap.et.common.dto.*;
 import com.rlap.et.common.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -58,12 +56,30 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createCategory(TypeCategorySubCategoryRequest request) {
+    public void createCategory(CategoryRequest request, UUID userId) {
+
+        EtTypeEntity type = etTypeRepository.findByTypeIdAndDeletedIsFalseAndActiveIsTrue(request.getTypeId());
+        if(type == null){
+            throw new ResourceNotFoundException("Invalid type");
+        }
+        EtCategoryEntity categoryEntity = new EtCategoryEntity();
+        categoryEntity.setType(type);
+        categoryEntity.setLabel(request.getLabel());
+        categoryEntity.setDescription(request.getDescription());
+        categoryEntity.setActive(true);
+        categoryEntity.setDeleted(true);
+        categoryEntity.setCreatedAt(ZonedDateTime.now());
+        categoryEntity.setUpdatedAt(ZonedDateTime.now());
+        categoryEntity.setCreatedBy(userId);
+        categoryEntity.setUpdatedBy(userId);
+
+        etCategoryRepository.save(categoryEntity);
+
 
     }
 
     @Override
-    public void updateCategory(UUID id, TypeCategorySubCategoryRequest request) {
+    public void updateCategory(UUID id, CategoryRequest request, UUID loggedOnUserId) {
 
     }
 
@@ -123,12 +139,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createSubCategory(TypeCategorySubCategoryRequest request) {
+    public void createSubCategory(LabelDesc request) {
 
     }
 
     @Override
-    public void updateSubCategory(UUID id, TypeCategorySubCategoryRequest request) {
+    public void updateSubCategory(UUID id, LabelDesc request) {
 
     }
 
@@ -164,12 +180,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createType(TypeCategorySubCategoryRequest request) {
+    public void createType(LabelDesc request) {
 
     }
 
     @Override
-    public void updateType(UUID id, TypeCategorySubCategoryRequest request) {
+    public void updateType(UUID id, LabelDesc request) {
 
     }
 

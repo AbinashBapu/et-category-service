@@ -2,6 +2,7 @@ package com.rlap.et.category.web.controllers;
 
 import com.rlap.et.category.service.CategoryService;
 import com.rlap.et.common.core.Response;
+import com.rlap.et.common.dto.LabelDesc;
 import com.rlap.et.common.dto.SubCategoryInfo;
 import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +40,13 @@ public class SubCategoryController {
     }
 
     @PostMapping
-    public Response<Void> createSubCategory(@RequestBody TypeCategorySubCategoryRequest request) {
+    public Response<Void> createSubCategory(@RequestBody LabelDesc request) {
         categoryService.createSubCategory(request);
         return new Response<>(201, "Subcategory created successfully", null, "Success");
     }
 
     @PutMapping("/{id}")
-    public Response<Void> updateSubCategory(@PathVariable UUID id, @RequestBody TypeCategorySubCategoryRequest request) {
+    public Response<Void> updateSubCategory(@PathVariable UUID id, @RequestBody LabelDesc request) {
         categoryService.updateSubCategory(id, request);
         return new Response<>(200, "Subcategory updated successfully", null, "Success");
     }

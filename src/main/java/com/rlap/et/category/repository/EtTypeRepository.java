@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface EtTypeRepository extends JpaRepository<EtTypeEntity, UUID> {
     List<EtTypeEntity> findAllByDeletedIsFalse();
+    EtTypeEntity findByTypeIdAndDeletedIsFalseAndActiveIsTrue(UUID typeId);
 }

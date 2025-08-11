@@ -3,8 +3,9 @@ package com.rlap.et.category.web.controllers;
 import com.rlap.et.category.service.CategoryService;
 import com.rlap.et.common.core.Response;
 import com.rlap.et.common.dto.CategoryInfo;
+import com.rlap.et.common.dto.CategoryRequest;
+import com.rlap.et.common.dto.LabelDesc;
 import com.rlap.et.common.dto.SubCategoryInfo;
-import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,14 +36,14 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Response<Void> createCategory(@RequestBody TypeCategorySubCategoryRequest request) {
-        categoryService.createCategory(request);
+    public Response<Void> createCategory(@RequestBody CategoryRequest request,@RequestHeader("X-User-Id") UUID userId) {
+        categoryService.createCategory(request,userId);
         return new Response<>(201, "Category created successfully", null, "Success");
     }
 
     @PutMapping("/{id}")
-    public Response<Void> updateCategory(@PathVariable UUID id, @RequestBody TypeCategorySubCategoryRequest request) {
-        categoryService.updateCategory(id, request);
+    public Response<Void> updateCategory(@PathVariable UUID id, @RequestBody CategoryRequest request,@RequestHeader("X-User-Id") UUID userId) {
+        categoryService.updateCategory(id, request,userId);
         return new Response<>(200, "Category updated successfully", null, "Success");
     }
 
