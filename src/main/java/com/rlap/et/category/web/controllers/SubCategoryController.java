@@ -4,7 +4,6 @@ import com.rlap.et.category.service.CategoryService;
 import com.rlap.et.common.core.Response;
 import com.rlap.et.common.dto.LabelDesc;
 import com.rlap.et.common.dto.SubCategoryInfo;
-import com.rlap.et.common.dto.TypeCategorySubCategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
