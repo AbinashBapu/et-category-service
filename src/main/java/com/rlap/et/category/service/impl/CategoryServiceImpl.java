@@ -156,7 +156,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<TypeInfo> getAllTypes() {
 
-        List<EtTypeEntity> typeEntityList = etTypeRepository.findAllByDeletedIsFalse();
+        List<EtTypeEntity> typeEntityList = etTypeRepository.findAllByDeletedIsFalseAndActiveIsTrue();
 
         if(typeEntityList.isEmpty()){
             return List.of();
