@@ -25,7 +25,7 @@ public interface CategoryService {
     SubCategoryInfo getSubCategoryInfoByCategoryAndSubCategoryId(UUID categoryId, UUID subCategoryId);
     List<SubCategoryInfo> getAllSubCategories();
     SubCategoryInfo getSubCategoryInfoById(UUID id);
-    void createSubCategory(LabelDesc request);
+    void createSubCategory(SubcategoryRequest request, UUID loggedOnUserId);
     void updateSubCategory(UUID id, LabelDesc request);
     void deleteSubCategory(UUID id);
 

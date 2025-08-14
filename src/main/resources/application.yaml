@@ -9,11 +9,11 @@ spring:
     config:
       profile: dev
   datasource:
-    url: jdbc:postgresql://localhost:5433/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: root
   liquibase:
-    default-schema: et_category
+    default-schema: et_classification
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
   jpa:
@@ -21,7 +21,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: et_category
+        default_schema: et_classification
 
 eureka:
   client:

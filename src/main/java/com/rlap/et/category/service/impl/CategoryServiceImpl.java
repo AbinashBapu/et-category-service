@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
@@ -139,7 +140,33 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createSubCategory(LabelDesc request) {
+    public void createSubCategory(SubcategoryRequest request, UUID loggedOnUserId) {
+
+        logger.info("LoggedOn User: {} :: Request: {}", loggedOnUserId, request);
+        Optional<EtCategoryEntity> categoryEntity = etCategoryRepository.findCategoryByIdAndActiveIsTrueAndDeletedFalse(request.getCategoryId());
+        if(categoryEntity.isEmpty()){
+            throw new ResourceNotFoundException("Missing category. please add first.");
+        }
+
+
+        EtSubCategoryEntity subCategoryEntity = new EtSubCategoryEntity();
+        subCategoryEntity.setLabel(request.getLabel());
+        subCategoryEntity.setDescription(request.getDescription());
+        subCategoryEntity.setCategoryEntity(categoryEntity.get());
+        subCategoryEntity.setCreatedAt(ZonedDateTime.now());
+        subCategoryEntity.setUpdatedAt(ZonedDateTime.now());
+        subCategoryEntity.setCreatedBy(loggedOnUserId);
+        subCategoryEntity.setUpdatedBy(loggedOnUserId);
+        subCategoryEntity.setActive(true);
+        subCategoryEntity.setDeleted(false);
+
+
+        etSubCategoryRepository.save(subCategoryEntity);
+
+        logger.info("Saved subcategory");
+
+
+
 
     }
 
