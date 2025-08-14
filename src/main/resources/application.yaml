@@ -17,10 +17,10 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
   jpa:
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         default_schema: et_classification
 
 eureka:

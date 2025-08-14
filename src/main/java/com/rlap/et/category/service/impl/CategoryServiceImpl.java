@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryEntity.setLabel(request.getLabel());
         categoryEntity.setDescription(request.getDescription());
         categoryEntity.setActive(true);
-        categoryEntity.setDeleted(true);
+        categoryEntity.setDeleted(false);
         categoryEntity.setCreatedAt(ZonedDateTime.now());
         categoryEntity.setUpdatedAt(ZonedDateTime.now());
         categoryEntity.setCreatedBy(userId);
