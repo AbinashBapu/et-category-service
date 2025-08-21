@@ -6,6 +6,7 @@
 
 
     <include file="db/changelog/ddl/18-01-2025_create_category_type_subcategory.xml"/>
+    <include file="db/changelog/ddl/21-08-2025_alter_category_type_subcategory_description.xml"/>
 
     <!-- Insert Data Into Tables type/category/subcategory -->
     <include file="db/changelog/dml/18-01-2025_insert_category_type_subcategory.sql"/>

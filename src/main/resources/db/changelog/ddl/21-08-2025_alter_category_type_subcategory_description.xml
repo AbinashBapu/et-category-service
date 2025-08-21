@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1755774413397-modify-type-description-length" author="abinash">
+        <modifyDataType tableName="type" columnName="type_description" newDataType="VARCHAR(512)"/>
+    </changeSet>
+
+    <changeSet id="1755774436068-modify-category-description-length" author="abinash">
+        <modifyDataType tableName="category" columnName="description" newDataType="VARCHAR(512)"/>
+    </changeSet>
+
+    <changeSet id="1755774443924-modify-subcategory-description-length" author="abinash">
+        <modifyDataType tableName="sub_category" columnName="description" newDataType="VARCHAR(512)"/>
+    </changeSet>
+
+</databaseChangeLog>
