@@ -3,6 +3,8 @@ spring:
     name: classification
   config:
     import: optional:configserver:http://localhost:8888
+    activate:
+      on-profile: dev
   cloud:
     config:
       profile: dev
@@ -15,12 +17,9 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
   jpa:
-    show-sql: false
     properties:
       hibernate:
-        format_sql: false
         default_schema: et_classification
-
 eureka:
   client:
     serviceUrl:
