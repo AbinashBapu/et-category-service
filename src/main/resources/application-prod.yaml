@@ -2,7 +2,7 @@ spring:
   application:
     name: classification
   config:
-    import: optional:configserver:http://config-service:8080
+    import: optional:configserver:http://config-service:8080/
     activate:
       on-profile: prod
   cloud:
