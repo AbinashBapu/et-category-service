@@ -62,4 +62,11 @@ public class CategoryController {
     }
 
 
+    @GetMapping("/{categoryId}/subCategories")
+    public Response<List<SubCategoryInfo>> getSubCategoryInfoBycategoryId(@PathVariable UUID categoryId) {
+        List<SubCategoryInfo> subCategoryInfo = categoryService.getSubCategoryInfoByCategoryId(categoryId);
+        return new Response<>(200, "Sub category fetched successfully", subCategoryInfo, "Success");
+    }
+
+
 }

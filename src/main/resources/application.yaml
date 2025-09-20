@@ -7,9 +7,9 @@ spring:
     config:
       profile: dev
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:root}
+    url: ${DB_URL:jdbc:postgresql://localhost:6000/postgres}
+    username: ${DB_USERNAME:test}
+    password: ${DB_PASSWORD:test}
   liquibase:
     default-schema: et_classification
     enabled: true

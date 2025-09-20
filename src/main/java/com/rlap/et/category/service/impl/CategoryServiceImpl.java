@@ -181,6 +181,26 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<SubCategoryInfo> getSubCategoryInfoByCategoryId(UUID categoryId) {
+
+        List<EtSubCategoryEntity> subCategories = etSubCategoryRepository.findAllSubCategoryByCategoryId(categoryId);
+
+        if(subCategories != null){
+            return subCategories.stream().map(subCategoryEntity -> {
+                SubCategoryInfo subCategoryInfo = new SubCategoryInfo();
+                subCategoryInfo.setPkSubCategoryId(subCategoryEntity.getPkSubCategoryId());
+                subCategoryInfo.setLabel(subCategoryEntity.getLabel());
+                subCategoryInfo.setDescription(subCategoryEntity.getDescription());
+                subCategoryInfo.setActive(subCategoryEntity.isActive());
+                subCategoryInfo.setDeleted(subCategoryEntity.isDeleted());
+                return subCategoryInfo;
+            }).toList();
+        }
+
+        return List.of();
+    }
+
+    @Override
     public List<TypeInfo> getAllTypes() {
 
         List<EtTypeEntity> typeEntityList = etTypeRepository.findAllByDeletedIsFalseAndActiveIsTrue();

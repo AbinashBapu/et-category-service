@@ -26,4 +26,10 @@ public interface EtSubCategoryRepository extends JpaRepository<EtSubCategoryEnti
             "AND c.pkCategoryId = :categoryId  AND sc.active = true AND sc.deleted = false  AND c.active = true AND c.deleted = false")
     EtSubCategoryEntity findSubCategoryWithCategoryIfActiveAndNotDeleted(@Param("subCategoryId") UUID subCategoryId, @Param("categoryId") UUID categoryId);
 
+
+
+    @Query("SELECT sc FROM EtSubCategoryEntity sc  WHERE sc.categoryEntity.pkCategoryId = :categoryId  " +
+            " AND sc.active = true AND sc.deleted = false")
+    List<EtSubCategoryEntity> findAllSubCategoryByCategoryId( @Param("categoryId") UUID categoryId);
+
 }
