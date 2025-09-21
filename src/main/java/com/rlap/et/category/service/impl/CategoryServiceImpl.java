@@ -136,7 +136,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public SubCategoryInfo getSubCategoryInfoById(UUID id) {
-        return null;
+
+        EtSubCategoryEntity subCategoryEntity = etSubCategoryRepository.findSubCategoryByIdAndActiveTrueAndDeletedFalse(id);
+        SubCategoryInfo subCategoryInfo = new SubCategoryInfo();
+        subCategoryInfo.setPkSubCategoryId(subCategoryEntity.getPkSubCategoryId());
+        subCategoryInfo.setLabel(subCategoryEntity.getLabel());
+        subCategoryInfo.setDescription(subCategoryEntity.getDescription());
+        subCategoryInfo.setActive(subCategoryEntity.isActive());
+        subCategoryInfo.setDeleted(subCategoryEntity.isDeleted());
+        return subCategoryInfo;
     }
 
     @Override
