@@ -1,4 +1,4 @@
-FROM openjdk:26-trixie
+FROM openjdk:26-ea-slim
 
 # Set environment variables (default, can be overridden at runtime)
 ENV JAVA_OPTS=""
